@@ -9,17 +9,17 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#18181B] dark:bg-[#121214] text-zinc-400 text-sm border-t border-zinc-800 mt-16 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Logo & Brand Info */}
+          {/* Logo & Brand Info matching Header sizing */}
           <div className="space-y-3 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="bg-[#E21A1A] text-white font-extrabold px-2.5 py-1 text-base tracking-tight rounded-xs select-none shadow-xs leading-none">
+              <div className="bg-[#E21A1A] text-white font-extrabold px-3 py-1 text-lg sm:text-xl tracking-tight rounded-xs select-none shadow-xs leading-normal">
                 ТЖД
               </div>
               <div className="leading-tight">
-                <span className="font-bold text-white text-sm sm:text-base block tracking-tight">
+                <span className="font-bold text-white text-xs sm:text-sm block tracking-tight">
                   {t.brandName}
                 </span>
-                <span className="text-[11px] text-zinc-400 block font-normal">
+                <span className="text-[10px] text-zinc-400 block font-normal">
                   {t.brandSubtitle}
                 </span>
               </div>

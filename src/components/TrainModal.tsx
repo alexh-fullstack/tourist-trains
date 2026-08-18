@@ -249,7 +249,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#E21A1A] hover:bg-[#C81010] text-white font-bold text-sm sm:text-base shadow-sm transition-all duration-150 transform active:scale-98"
             >
               <Ticket className="w-5 h-5" />
-              <span>Купить билет на сайте РЖД</span>
+              <span>Купить билет</span>
               <ExternalLink className="w-4 h-4 opacity-80" />
             </a>
           </div>

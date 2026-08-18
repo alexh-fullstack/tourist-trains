@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, ChevronDown, Compass, Phone, CalendarCheck, Sparkles, MapPin } from 'lucide-react';
+import {
+  Eye,
+  ChevronDown,
+  Phone,
+  CalendarCheck,
+  Sparkles,
+  Compass,
+  Smile,
+  ShieldCheck,
+  MapPin,
+} from 'lucide-react';
 
 interface HeaderProps {
-  totalCount: number;
-  filteredCount: number;
+  totalCount?: number;
+  filteredCount?: number;
 }
 
 interface Slide {
   id: number;
   image: string;
   badge: string;
+  badgeBg: string;
+  badgeText: string;
   title: string;
   subtitle: string;
 }
@@ -18,7 +30,9 @@ const HERO_SLIDES: Slide[] = [
   {
     id: 1,
     image: 'images/hero-train-1.jpg',
-    badge: 'Туристические поезда',
+    badge: 'Туристические поезда России',
+    badgeBg: 'bg-[#E21A1A]',
+    badgeText: 'text-white',
     title: 'Путешествуйте по России на туристских поездах',
     subtitle: 'Комфортабельные «отели на колёсах»: от Карелии и Золотого кольца до Кавказа и Байкала с готовой экскурсионной программой.',
   },
@@ -26,6 +40,8 @@ const HERO_SLIDES: Slide[] = [
     id: 2,
     image: 'images/hero-train-2.jpg',
     badge: 'Премиальный комфорт в пути',
+    badgeBg: 'bg-amber-500',
+    badgeText: 'text-gray-950',
     title: 'Скоростные современные круизные экспрессы',
     subtitle: 'Современные вагоны СВ, купе и люкс, ресторан на борту, панорамные окна и первоклассный сервис в пути.',
   },
@@ -33,6 +49,8 @@ const HERO_SLIDES: Slide[] = [
     id: 3,
     image: 'images/hero-train-3.jpg',
     badge: 'Круизы выходного дня и гранд-туры',
+    badgeBg: 'bg-emerald-600',
+    badgeText: 'text-white',
     title: 'Уникальные железнодорожные маршруты',
     subtitle: 'Путешествуйте без забот: ночью поезд плавно везёт вас в новый город, а днём ждут увлекательные экскурсии с гидом.',
   },
@@ -40,12 +58,14 @@ const HERO_SLIDES: Slide[] = [
     id: 4,
     image: 'images/hero-train-4.jpg',
     badge: 'Живописная природа за окном',
+    badgeBg: 'bg-blue-600',
+    badgeText: 'text-white',
     title: 'Захватывающие панорамы за окном поезда',
     subtitle: 'Увидьте скалы Рускеалы, седые вершины Кавказа, старинные купола Суздаля и хрустальные берега Байкала из окна купе.',
   },
 ];
 
-export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Smooth auto-transition between slides every 6 seconds
@@ -58,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => 
 
   return (
     <header className="w-full bg-white border-b border-gray-200">
-      {/* Top Header Bar */}
+      {/* Top Corporate Header Bar */}
       <div className="bg-white border-b border-gray-100 text-xs text-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
           {/* Brand Logo & Name */}
@@ -103,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => 
         </div>
       </div>
 
-      {/* Navigation Sub-Bar (Thematic travel links, non-duplicate of regions) */}
+      {/* Navigation Sub-Bar (Thematic travel links) */}
       <div className="bg-[#2B303A] text-gray-200 text-xs font-medium hidden sm:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-10">
           <div className="flex items-center gap-6">
@@ -125,7 +145,7 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => 
       </div>
 
       {/* Dynamic Auto-Animated Hero Banner */}
-      <div className="relative bg-gray-950 text-white overflow-hidden select-none min-h-[340px] sm:min-h-[400px] flex items-center">
+      <div className="relative bg-gray-950 text-white overflow-hidden select-none min-h-[380px] sm:min-h-[440px] flex items-center">
         {/* Background Images Crossfade with Smooth Ken-Burns */}
         {HERO_SLIDES.map((slide, index) => (
           <div
@@ -146,9 +166,11 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => 
         {/* Content Box */}
         <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 relative z-10">
           <div className="max-w-3xl space-y-4">
-            {/* Thematic Badge */}
+            {/* Thematic Badge with Dynamic Styled Colors */}
             <div>
-              <span className="inline-flex items-center gap-1.5 bg-[#E21A1A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-xs shadow-md">
+              <span
+                className={`inline-flex items-center gap-1.5 ${HERO_SLIDES[currentSlide].badgeBg} ${HERO_SLIDES[currentSlide].badgeText} text-xs sm:text-sm font-bold uppercase tracking-wider px-3.5 py-1 rounded-xs shadow-md transition-colors duration-500`}
+              >
                 <Sparkles className="w-3.5 h-3.5" />
                 {HERO_SLIDES[currentSlide].badge}
               </span>
@@ -162,19 +184,46 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, filteredCount }) => 
               {HERO_SLIDES[currentSlide].subtitle}
             </p>
 
-            {/* Badges / Stats */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm text-white shadow-xs">
-                <Compass className="w-4 h-4 text-[#FF4D4D]" />
-                <span>Доступно туров:</span>
-                <strong className="font-bold text-white bg-[#E21A1A] px-2 py-0.5 rounded text-xs">
-                  {filteredCount} {filteredCount === totalCount ? `(все ${totalCount})` : `из ${totalCount}`}
-                </strong>
+            {/* Commercial Badges & Big Impact Figures */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/15">
+              <div className="bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-lg">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <Compass className="w-4 h-4 text-[#FF5A5A]" />
+                  <span className="text-xl sm:text-2xl font-black text-white tracking-tight">50+</span>
+                </div>
+                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">
+                  уникальных маршрутов
+                </div>
               </div>
 
-              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm text-white shadow-xs">
-                <MapPin className="w-4 h-4 text-emerald-400" />
-                <span>4 ключевых региона России</span>
+              <div className="bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-lg">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xl sm:text-2xl font-black text-white tracking-tight">15+</span>
+                </div>
+                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">
+                  регионов России
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-lg">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <Smile className="w-4 h-4 text-amber-400" />
+                  <span className="text-xl sm:text-2xl font-black text-white tracking-tight">98%</span>
+                </div>
+                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">
+                  довольных туристов
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-md border border-white/15 p-3 rounded-lg">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                  <span className="text-xl sm:text-2xl font-black text-white tracking-tight">100%</span>
+                </div>
+                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">
+                  всё включено в тур
+                </div>
               </div>
             </div>
           </div>

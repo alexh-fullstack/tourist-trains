@@ -28,14 +28,14 @@ export const Filters: React.FC<FiltersProps> = ({
   return (
     <section
       aria-label="Фильтры и поиск туров"
-      className="bg-white dark:bg-gray-900 rounded-xl shadow-xs border border-gray-200 dark:border-gray-800 p-4 sm:p-6 mb-8 transition-colors duration-200"
+      className="bg-white dark:bg-[#18181B] rounded-xl shadow-xs border border-gray-200 dark:border-zinc-800 p-4 sm:p-6 mb-8 transition-colors duration-200"
     >
       <div className="flex flex-col gap-5">
         {/* Top bar: Search input + Sort */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 items-center">
           {/* Search bar */}
           <div className="relative md:col-span-8">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-zinc-500">
               <Search className="w-5 h-5" />
             </div>
             <input
@@ -45,14 +45,14 @@ export const Filters: React.FC<FiltersProps> = ({
               onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
               placeholder="Поиск поезда по названию, городу или тегу..."
               aria-label="Поиск по названию поезда"
-              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100/70 dark:hover:bg-gray-750 focus:bg-white dark:focus:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150"
+              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-gray-50 dark:bg-[#202024] hover:bg-gray-100/70 dark:hover:bg-[#27272C] focus:bg-white dark:focus:bg-[#202024] border border-gray-300 dark:border-zinc-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-zinc-100 placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150"
             />
             {filters.searchQuery && (
               <button
                 type="button"
                 onClick={() => onFilterChange({ searchQuery: '' })}
                 aria-label="Очистить поиск"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-zinc-300 transition cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -61,23 +61,23 @@ export const Filters: React.FC<FiltersProps> = ({
 
           {/* Sort dropdown */}
           <div className="md:col-span-4 relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 dark:text-zinc-500">
               <ArrowUpDown className="w-4 h-4" />
             </div>
             <select
               aria-label="Сортировка"
               value={filters.sortBy}
               onChange={(e) => onFilterChange({ sortBy: e.target.value as SortOption })}
-              className="w-full pl-10 pr-8 py-2.5 sm:py-3 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100/70 dark:hover:bg-gray-750 focus:bg-white dark:focus:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150 cursor-pointer appearance-none"
+              className="w-full pl-10 pr-8 py-2.5 sm:py-3 bg-gray-50 dark:bg-[#202024] hover:bg-gray-100/70 dark:hover:bg-[#27272C] focus:bg-white dark:focus:bg-[#202024] border border-gray-300 dark:border-zinc-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150 cursor-pointer appearance-none"
             >
-              <option value="default" className="dark:bg-gray-800">Сортировка по умолчанию</option>
-              <option value="price_asc" className="dark:bg-gray-800">Сначала дешевле</option>
-              <option value="price_desc" className="dark:bg-gray-800">Сначала дороже</option>
-              <option value="departure_nearest" className="dark:bg-gray-800">По ближайшей дате</option>
-              <option value="duration_asc" className="dark:bg-gray-800">По длительности (короткие)</option>
-              <option value="duration_desc" className="dark:bg-gray-800">По длительности (длинные)</option>
+              <option value="default" className="dark:bg-[#202024]">Сортировка по умолчанию</option>
+              <option value="price_asc" className="dark:bg-[#202024]">Сначала дешевле</option>
+              <option value="price_desc" className="dark:bg-[#202024]">Сначала дороже</option>
+              <option value="departure_nearest" className="dark:bg-[#202024]">По ближайшей дате</option>
+              <option value="duration_asc" className="dark:bg-[#202024]">По длительности (короткие)</option>
+              <option value="duration_desc" className="dark:bg-[#202024]">По длительности (длинные)</option>
             </select>
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 dark:text-zinc-500">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -86,8 +86,8 @@ export const Filters: React.FC<FiltersProps> = ({
         </div>
 
         {/* Region Filter */}
-        <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+        <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-zinc-400">
             <MapPin className="w-3.5 h-3.5 text-[#E21A1A]" />
             <span>Регион:</span>
           </div>
@@ -99,7 +99,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer ${
                 filters.selectedRegion === ''
                   ? 'bg-[#E21A1A] text-white shadow-xs font-semibold'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
               }`}
             >
               Все регионы
@@ -112,7 +112,7 @@ export const Filters: React.FC<FiltersProps> = ({
                 className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer ${
                   filters.selectedRegion === region
                     ? 'bg-[#E21A1A] text-white shadow-xs font-semibold'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
                 }`}
               >
                 {region}
@@ -122,8 +122,8 @@ export const Filters: React.FC<FiltersProps> = ({
         </div>
 
         {/* Departure Month Filter */}
-        <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+        <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-zinc-800">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-zinc-400">
             <Calendar className="w-3.5 h-3.5 text-[#E21A1A]" />
             <span>Месяц отправления:</span>
           </div>
@@ -134,8 +134,8 @@ export const Filters: React.FC<FiltersProps> = ({
               onClick={() => onFilterChange({ selectedMonth: '' })}
               className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer ${
                 filters.selectedMonth === ''
-                  ? 'bg-[#2B303A] dark:bg-gray-700 text-white shadow-xs font-semibold'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-[#2B303A] dark:bg-zinc-700 text-white shadow-xs font-semibold'
+                  : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
               }`}
             >
               Все месяцы
@@ -147,8 +147,8 @@ export const Filters: React.FC<FiltersProps> = ({
                 onClick={() => onFilterChange({ selectedMonth: key })}
                 className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer ${
                   filters.selectedMonth === key
-                    ? 'bg-[#2B303A] dark:bg-gray-700 text-white shadow-xs font-semibold'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-[#2B303A] dark:bg-zinc-700 text-white shadow-xs font-semibold'
+                    : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
                 }`}
               >
                 {label}
@@ -158,9 +158,9 @@ export const Filters: React.FC<FiltersProps> = ({
         </div>
 
         {/* Bottom stats and Reset */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100 dark:border-gray-800 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-gray-600 dark:text-zinc-400">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+            <Filter className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
             <span>
               Показано маршрутов: <strong className="text-gray-900 dark:text-white font-semibold">{totalResults}</strong>
             </span>

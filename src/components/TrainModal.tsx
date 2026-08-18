@@ -65,7 +65,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
       role="dialog"
       aria-modal="true"
       aria-labelledby="train-modal-title"
@@ -77,7 +77,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
     >
       <div
         ref={modalRef}
-        className="relative bg-white dark:bg-gray-900 w-full max-w-3xl rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden my-auto max-h-[92vh] flex flex-col transform transition-all text-gray-900 dark:text-gray-100"
+        className="relative bg-white dark:bg-[#18181B] w-full max-w-3xl rounded-xl shadow-2xl border border-gray-200 dark:border-zinc-800 overflow-hidden my-auto max-h-[92vh] flex flex-col transform transition-all text-gray-900 dark:text-zinc-100"
       >
         {/* Header with destination image background */}
         <div className="relative h-48 sm:h-56 bg-gray-900 text-white p-6 flex flex-col justify-end overflow-hidden">
@@ -123,34 +123,34 @@ export const TrainModal: React.FC<TrainModalProps> = ({
         </div>
 
         {/* Scrollable Content */}
-        <div className="p-5 sm:p-7 overflow-y-auto space-y-6 flex-1 text-gray-800 dark:text-gray-200">
+        <div className="p-5 sm:p-7 overflow-y-auto space-y-6 flex-1 text-gray-800 dark:text-zinc-200">
           {/* Full Description */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-2">
               Описание туристического маршрута
             </h4>
-            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-gray-800/70 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+            <p className="text-sm sm:text-base text-gray-700 dark:text-zinc-300 leading-relaxed bg-gray-50 dark:bg-[#202024] p-4 rounded-lg border border-gray-200 dark:border-zinc-750">
               {train.description}
             </p>
           </div>
 
           {/* Full Route Stops */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <Route className="w-4 h-4 text-[#E21A1A]" />
               <span>Остановки по маршруту ({train.route.length} станций)</span>
             </h4>
-            <div className="flex flex-wrap items-center gap-2 bg-gray-50 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700 p-3 sm:p-4 rounded-lg">
+            <div className="flex flex-wrap items-center gap-2 bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 p-3 sm:p-4 rounded-lg">
               {train.route.map((city, idx) => (
                 <React.Fragment key={idx}>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md text-xs sm:text-sm font-semibold text-gray-900 dark:text-white shadow-xs">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#2A2A30] border border-gray-200 dark:border-zinc-700 rounded-md text-xs sm:text-sm font-semibold text-gray-900 dark:text-white shadow-xs">
                     <span className="w-5 h-5 rounded-full bg-[#E21A1A] text-white flex items-center justify-center text-[10px] font-bold">
                       {idx + 1}
                     </span>
                     <span>{city}</span>
                   </div>
                   {idx < train.route.length - 1 && (
-                    <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-gray-400 dark:text-zinc-500 flex-shrink-0" />
                   )}
                 </React.Fragment>
               ))}
@@ -159,7 +159,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
 
           {/* Excursions Included */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Экскурсионная программа</span>
             </h4>
@@ -167,7 +167,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               {train.excursions.map((excursion, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-2.5 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/25 border border-emerald-200 dark:border-emerald-900/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm"
+                  className="flex items-start gap-2.5 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm"
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
                   <span className="font-semibold">{excursion}</span>
@@ -178,7 +178,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
 
           {/* All Departure Dates */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-[#E21A1A]" />
               <span>Все доступные даты отправления ({train.departures.length})</span>
             </h4>
@@ -186,9 +186,9 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               {train.departures.map((dateStr, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700 text-center flex flex-col items-center justify-center gap-1 hover:border-[#E21A1A] transition"
+                  className="p-3 rounded-lg bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 text-center flex flex-col items-center justify-center gap-1 hover:border-[#E21A1A] transition"
                 >
-                  <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                  <Calendar className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
                   <span className="text-xs font-bold text-gray-900 dark:text-white">{formatDate(dateStr)}</span>
                   <span className="text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 font-bold px-2 py-0.5 rounded">
                     Места доступны
@@ -201,7 +201,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           {/* Tags */}
           {train.tags && train.tags.length > 0 && (
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-2">
                 Теги
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -213,7 +213,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
                       onTagClick?.(tag);
                       onClose();
                     }}
-                    className="inline-flex items-center gap-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-950/50 hover:text-[#E21A1A] dark:hover:text-red-300 text-gray-700 dark:text-gray-300 px-3 py-1 rounded transition cursor-pointer"
+                    className="inline-flex items-center gap-1 text-xs font-medium bg-gray-100 dark:bg-[#202024] hover:bg-red-50 dark:hover:bg-red-950/50 hover:text-[#E21A1A] dark:hover:text-red-300 text-gray-700 dark:text-zinc-300 px-3 py-1 rounded transition cursor-pointer"
                   >
                     <Tag className="w-3 h-3 text-gray-400" />
                     #{tag}
@@ -225,11 +225,11 @@ export const TrainModal: React.FC<TrainModalProps> = ({
         </div>
 
         {/* Footer with Price & External Buy Link */}
-        <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-4 sm:p-6 bg-gray-50 dark:bg-[#121214] border-t border-gray-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
-            <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">Стоимость билета за тур</div>
+            <div className="text-xs text-gray-500 dark:text-zinc-400 font-medium">Стоимость билета за тур</div>
             <div className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white flex items-baseline justify-center sm:justify-start gap-1.5">
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">от</span>
+              <span className="text-sm font-normal text-gray-500 dark:text-zinc-400">от</span>
               <span className="text-[#E21A1A] font-black">{formatPrice(train.price_from)}</span>
             </div>
           </div>
@@ -238,7 +238,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="hidden sm:inline-flex px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-semibold transition cursor-pointer"
+              className="hidden sm:inline-flex px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-zinc-300 text-sm font-semibold transition cursor-pointer"
             >
               Закрыть
             </button>

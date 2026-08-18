@@ -131,7 +131,7 @@ const CatalogContent: React.FC = () => {
   }, [trains, filters]);
 
   return (
-    <div className="min-h-screen bg-[#F4F5F8] dark:bg-gray-950 flex flex-col font-sans text-gray-900 dark:text-gray-100 antialiased transition-colors duration-200">
+    <div className="min-h-screen bg-[#F4F5F8] dark:bg-[#121214] flex flex-col font-sans text-gray-900 dark:text-zinc-100 antialiased transition-colors duration-200">
       {/* Header */}
       <Header totalCount={trains.length} filteredCount={filteredTrains.length} />
 

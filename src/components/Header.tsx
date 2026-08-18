@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = () => {
   return (
     <header className="w-full bg-white dark:bg-[#18181B] border-b border-gray-200 dark:border-zinc-800 transition-colors duration-200">
       {/* Top Corporate Header Bar */}
-      <div className="bg-white dark:bg-[#18181B] border-b border-gray-100 dark:border-zinc-800 text-xs text-gray-700 dark:text-zinc-300 transition-colors duration-200">
+      <div className="bg-white dark:bg-[#18181B] border-b border-gray-200 dark:border-zinc-800 text-xs text-gray-700 dark:text-zinc-300 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
           {/* Brand Logo & Name */}
           <div className="flex items-center gap-3">
@@ -74,22 +74,32 @@ export const Header: React.FC<HeaderProps> = () => {
         </div>
       </div>
 
-      {/* Navigation Sub-Bar */}
-      <div className="bg-[#2B303A] dark:bg-[#121214] text-gray-200 text-xs font-medium hidden sm:block border-b border-transparent dark:border-zinc-800 transition-colors duration-200">
+      {/* Navigation Sub-Bar (Light in light mode, Dark in dark mode) */}
+      <div className="bg-gray-50 dark:bg-[#141416] text-gray-700 dark:text-zinc-300 text-xs font-medium hidden sm:block border-b border-gray-200/80 dark:border-zinc-800 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-10">
           <div className="flex items-center gap-6">
-            <span className="text-white font-bold bg-[#E21A1A] px-3 py-1 rounded-xs">
+            <span className="text-white font-bold bg-[#E21A1A] px-3 py-1 rounded-xs shadow-2xs">
               Каталог маршрутов
             </span>
-            <span className="hover:text-white transition cursor-pointer">Отели на колёсах</span>
-            <span className="hover:text-white transition cursor-pointer">Экскурсионные программы</span>
-            <span className="hover:text-white transition cursor-pointer">Календарь поездок</span>
-            <span className="hover:text-white transition cursor-pointer">Правила и багаж</span>
-            <span className="hover:text-white transition cursor-pointer">Частые вопросы</span>
+            <span className="text-gray-600 dark:text-zinc-400 hover:text-[#E21A1A] dark:hover:text-white transition cursor-pointer">
+              Отели на колёсах
+            </span>
+            <span className="text-gray-600 dark:text-zinc-400 hover:text-[#E21A1A] dark:hover:text-white transition cursor-pointer">
+              Экскурсионные программы
+            </span>
+            <span className="text-gray-600 dark:text-zinc-400 hover:text-[#E21A1A] dark:hover:text-white transition cursor-pointer">
+              Календарь поездок
+            </span>
+            <span className="text-gray-600 dark:text-zinc-400 hover:text-[#E21A1A] dark:hover:text-white transition cursor-pointer">
+              Правила и багаж
+            </span>
+            <span className="text-gray-600 dark:text-zinc-400 hover:text-[#E21A1A] dark:hover:text-white transition cursor-pointer">
+              Частые вопросы
+            </span>
           </div>
 
-          <div className="flex items-center gap-2 text-gray-300">
-            <CalendarCheck className="w-3.5 h-3.5 text-amber-400" />
+          <div className="flex items-center gap-2 text-gray-500 dark:text-zinc-400 text-[11px]">
+            <CalendarCheck className="w-3.5 h-3.5 text-[#E21A1A] dark:text-amber-400" />
             <span>Сезон 2026–2027</span>
           </div>
         </div>

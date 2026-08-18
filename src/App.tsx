@@ -130,7 +130,7 @@ export const App: React.FC = () => {
   }, [trains, filters]);
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col font-sans text-slate-900 antialiased">
+    <div className="min-h-screen bg-[#F4F5F8] flex flex-col font-sans text-gray-900 antialiased">
       {/* Header */}
       <Header totalCount={trains.length} filteredCount={filteredTrains.length} />
 

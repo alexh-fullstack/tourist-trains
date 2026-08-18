@@ -7,7 +7,7 @@ import {
   formatRouteShort,
   getNearestDeparture,
 } from '../utils/formatters';
-import { Calendar, Clock, MapPin, ArrowRight, Tag, Sparkles } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowRight, Tag, ChevronRight } from 'lucide-react';
 
 interface TrainCardProps {
   train: Train;
@@ -15,43 +15,10 @@ interface TrainCardProps {
   onTagClick?: (tag: string) => void;
 }
 
-// Region style badges
-const regionColors: Record<string, { bg: string; text: string; border: string; gradient: string }> = {
-  'Северо-Запад': {
-    bg: 'bg-cyan-50',
-    text: 'text-cyan-800',
-    border: 'border-cyan-200',
-    gradient: 'from-cyan-600 to-blue-700',
-  },
-  'Юг': {
-    bg: 'bg-amber-50',
-    text: 'text-amber-800',
-    border: 'border-amber-200',
-    gradient: 'from-amber-500 to-orange-600',
-  },
-  'Сибирь': {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-800',
-    border: 'border-emerald-200',
-    gradient: 'from-emerald-600 to-teal-700',
-  },
-  'Центр': {
-    bg: 'bg-indigo-50',
-    text: 'text-indigo-800',
-    border: 'border-indigo-200',
-    gradient: 'from-indigo-600 to-violet-700',
-  },
-};
-
 export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClick }) => {
   const nearestDate = getNearestDeparture(train.departures);
   const routeShort = formatRouteShort(train.route);
-  const styling = regionColors[train.region] || {
-    bg: 'bg-slate-50',
-    text: 'text-slate-800',
-    border: 'border-slate-200',
-    gradient: 'from-slate-700 to-slate-900',
-  };
+  const imageSrc = train.image || `images/${train.id}.jpg`;
 
   return (
     <article
@@ -64,107 +31,117 @@ export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClic
           onSelect(train);
         }
       }}
-      className="group relative bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-indigo-300 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="group relative bg-white rounded-xl border border-gray-200 shadow-xs hover:shadow-lg hover:border-gray-300 transition-all duration-200 flex flex-col justify-between overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E21A1A]"
       aria-label={`Поезд ${train.name}, регион ${train.region}`}
     >
-      {/* Top Banner Accent */}
-      <div className={`h-2.5 w-full bg-gradient-to-r ${styling.gradient}`} />
+      {/* Top Image with Badge Overlay */}
+      <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-gray-100">
+        <img
+          src={imageSrc}
+          alt={train.name}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
 
-      <div className="p-5 sm:p-6 flex-1 flex flex-col">
-        {/* Header Badges */}
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <span
-            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${styling.bg} ${styling.text} ${styling.border}`}
-          >
+        {/* Top Badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-[#E21A1A] text-white shadow-sm">
             <MapPin className="w-3 h-3" />
             {train.region}
           </span>
 
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
-            <Clock className="w-3 h-3 text-slate-500" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-black/60 backdrop-blur-sm text-white border border-white/20">
+            <Clock className="w-3 h-3 text-amber-300" />
             {formatDuration(train.duration_days)}
           </span>
         </div>
 
-        {/* Train Name */}
-        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors duration-200">
-          {train.name}
-        </h3>
-
-        {/* Route (first -> last city) */}
-        <div
-          aria-label={`Маршрут: ${routeShort}`}
-          className="mt-3 bg-slate-50 border border-slate-100 rounded-xl p-3"
-        >
-          <div className="text-xs font-medium text-slate-500 mb-1 flex items-center gap-1">
-            <span>Маршрут:</span>
-            <span className="text-slate-400">({train.route.length} станций)</span>
-          </div>
-          <div className="text-sm font-semibold text-slate-800 flex items-center gap-1.5 flex-wrap">
-            <span>{train.route[0]}</span>
-            <ArrowRight className="w-4 h-4 text-indigo-500 flex-shrink-0" />
-            <span>{train.route[train.route.length - 1]}</span>
-          </div>
+        {/* Name over bottom of image */}
+        <div className="absolute bottom-3 left-3 right-3">
+          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight drop-shadow-sm group-hover:text-red-200 transition-colors">
+            {train.name}
+          </h3>
         </div>
-
-        {/* Nearest Departure Date */}
-        <div className="mt-4 flex items-center gap-2 text-sm text-slate-700 bg-amber-50/60 border border-amber-200/50 px-3 py-2 rounded-xl">
-          <Calendar className="w-4 h-4 text-amber-600 flex-shrink-0" />
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs sm:text-sm">
-            <span className="text-slate-500">Ближайший выезд:</span>
-            <span className="font-semibold text-slate-900">
-              {nearestDate ? formatDate(nearestDate, true) : 'По запросу'}
-            </span>
-          </div>
-        </div>
-
-        {/* Description preview */}
-        <p className="mt-3 text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
-          {train.description}
-        </p>
-
-        {/* Tags */}
-        {train.tags && train.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5 pt-2">
-            {train.tags.map((tag) => (
-              <button
-                key={tag}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onTagClick?.(tag);
-                }}
-                className="inline-flex items-center gap-1 text-[11px] font-medium bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-600 px-2 py-0.5 rounded-md transition-colors"
-              >
-                <Tag className="w-2.5 h-2.5 text-slate-400" />
-                #{tag}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* Footer Price & Action CTA */}
-      <div className="p-5 sm:p-6 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
-        <div>
-          <div className="text-xs text-slate-500 font-medium">Цена за тур</div>
-          <div className="text-lg sm:text-xl font-extrabold text-slate-900 flex items-baseline gap-1">
-            <span className="text-xs text-slate-500 font-normal">от</span>
-            <span className="text-indigo-700 font-black">{formatPrice(train.price_from)}</span>
+      <div className="p-5 flex-1 flex flex-col justify-between">
+        <div className="space-y-3">
+          {/* Route (first -> last city) */}
+          <div
+            aria-label={`Маршрут: ${routeShort}`}
+            className="bg-gray-50 border border-gray-100 rounded-lg p-3"
+          >
+            <div className="text-xs font-semibold text-gray-500 mb-1 flex items-center justify-between">
+              <span>Маршрут тура:</span>
+              <span className="text-gray-400 font-normal">{train.route.length} станций</span>
+            </div>
+            <div className="text-sm font-bold text-gray-900 flex items-center gap-2 flex-wrap">
+              <span>{train.route[0]}</span>
+              <ArrowRight className="w-4 h-4 text-[#E21A1A] flex-shrink-0" />
+              <span>{train.route[train.route.length - 1]}</span>
+            </div>
           </div>
+
+          {/* Nearest Departure Date */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 bg-red-50/70 border border-red-100 px-3 py-2 rounded-lg">
+            <Calendar className="w-4 h-4 text-[#E21A1A] flex-shrink-0" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs">
+              <span className="text-gray-500">Ближайший выезд:</span>
+              <strong className="font-bold text-gray-900">
+                {nearestDate ? formatDate(nearestDate, true) : 'По запросу'}
+              </strong>
+            </div>
+          </div>
+
+          {/* Description preview */}
+          <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">
+            {train.description}
+          </p>
+
+          {/* Tags */}
+          {train.tags && train.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {train.tags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onTagClick?.(tag);
+                  }}
+                  className="inline-flex items-center gap-1 text-[11px] font-medium bg-gray-100 hover:bg-red-50 hover:text-[#E21A1A] text-gray-600 px-2 py-0.5 rounded transition cursor-pointer"
+                >
+                  <Tag className="w-2.5 h-2.5 text-gray-400" />
+                  #{tag}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect(train);
-          }}
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-600/20 group-hover:shadow-indigo-600/40 transition-all duration-200 cursor-pointer"
-        >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Подробнее</span>
-        </button>
+        {/* Footer Price & Action */}
+        <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+          <div>
+            <div className="text-[11px] text-gray-500 font-medium">Стоимость</div>
+            <div className="text-lg sm:text-xl font-bold text-gray-900 flex items-baseline gap-1">
+              <span className="text-xs text-gray-500 font-normal">от</span>
+              <span className="text-[#E21A1A] font-extrabold">{formatPrice(train.price_from)}</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelect(train);
+            }}
+            className="inline-flex items-center gap-1 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-[#E21A1A] hover:bg-[#C81010] text-white shadow-xs transition duration-150 cursor-pointer"
+          >
+            <span>Подробнее</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </article>
   );

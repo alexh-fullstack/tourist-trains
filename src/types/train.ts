@@ -10,6 +10,7 @@ export interface Train {
   description: string;
   excursions: string[];
   buy_url: string;
+  image?: string;
 }
 
 export interface TrainsData {

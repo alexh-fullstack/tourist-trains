@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import trainsData from './data/trains.json';
 import type { Train, FilterState } from './types/train';
 import { getAvailableMonths, getAvailableRegions, getNearestDeparture } from './utils/formatters';
+import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Filters } from './components/Filters';
 import { TrainCard } from './components/TrainCard';
@@ -16,7 +17,7 @@ const INITIAL_FILTERS: FilterState = {
   sortBy: 'default',
 };
 
-export const App: React.FC = () => {
+const CatalogContent: React.FC = () => {
   const trains: Train[] = useMemo(() => trainsData.trains, []);
   const availableRegions = useMemo(() => getAvailableRegions(trains), [trains]);
   const availableMonths = useMemo(() => getAvailableMonths(trains), [trains]);
@@ -130,7 +131,7 @@ export const App: React.FC = () => {
   }, [trains, filters]);
 
   return (
-    <div className="min-h-screen bg-[#F4F5F8] flex flex-col font-sans text-gray-900 antialiased">
+    <div className="min-h-screen bg-[#F4F5F8] dark:bg-gray-950 flex flex-col font-sans text-gray-900 dark:text-gray-100 antialiased transition-colors duration-200">
       {/* Header */}
       <Header totalCount={trains.length} filteredCount={filteredTrains.length} />
 
@@ -178,6 +179,14 @@ export const App: React.FC = () => {
       {/* Footer */}
       <Footer />
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <CatalogContent />
+    </ThemeProvider>
   );
 };
 

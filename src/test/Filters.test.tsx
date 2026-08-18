@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Filters } from '../components/Filters';
+import { LanguageProvider } from '../context/LanguageContext';
 import type { FilterState } from '../types/train';
 
 const defaultFilters: FilterState = {
@@ -17,12 +18,16 @@ const mockMonths = [
   { key: '2026-10', label: 'Октябрь 2026' },
 ];
 
+const renderWithProvider = (ui: React.ReactElement) => {
+  return render(<LanguageProvider>{ui}</LanguageProvider>);
+};
+
 describe('Filters Component', () => {
   it('renders search input, region buttons, month buttons and sort options', () => {
     const handleFilterChange = vi.fn();
     const handleReset = vi.fn();
 
-    render(
+    renderWithProvider(
       <Filters
         filters={defaultFilters}
         onFilterChange={handleFilterChange}
@@ -51,7 +56,7 @@ describe('Filters Component', () => {
     const handleFilterChange = vi.fn();
     const handleReset = vi.fn();
 
-    render(
+    renderWithProvider(
       <Filters
         filters={defaultFilters}
         onFilterChange={handleFilterChange}
@@ -72,7 +77,7 @@ describe('Filters Component', () => {
     const handleFilterChange = vi.fn();
     const handleReset = vi.fn();
 
-    render(
+    renderWithProvider(
       <Filters
         filters={defaultFilters}
         onFilterChange={handleFilterChange}
@@ -98,7 +103,7 @@ describe('Filters Component', () => {
       selectedRegion: 'Юг',
     };
 
-    render(
+    renderWithProvider(
       <Filters
         filters={activeFilters}
         onFilterChange={handleFilterChange}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, X, Filter, RotateCcw, Calendar, MapPin, ArrowUpDown } from 'lucide-react';
 import type { FilterState, SortOption } from '../types/train';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FiltersProps {
   filters: FilterState;
@@ -19,6 +20,8 @@ export const Filters: React.FC<FiltersProps> = ({
   availableMonths,
   totalResults,
 }) => {
+  const { t, formatMonthLabel } = useLanguage();
+
   const hasActiveFilters =
     Boolean(filters.searchQuery.trim()) ||
     Boolean(filters.selectedRegion) ||
@@ -27,7 +30,7 @@ export const Filters: React.FC<FiltersProps> = ({
 
   return (
     <section
-      aria-label="Фильтры и поиск туров"
+      aria-label={t.filterRegionLabel}
       className="bg-white dark:bg-[#18181B] rounded-xl shadow-xs border border-gray-200 dark:border-zinc-800 p-4 sm:p-6 mb-8 transition-colors duration-200"
     >
       <div className="flex flex-col gap-5">
@@ -43,15 +46,15 @@ export const Filters: React.FC<FiltersProps> = ({
               role="searchbox"
               value={filters.searchQuery}
               onChange={(e) => onFilterChange({ searchQuery: e.target.value })}
-              placeholder="Поиск поезда по названию, городу или тегу..."
-              aria-label="Поиск по названию поезда"
+              placeholder={t.searchPlaceholder}
+              aria-label={t.searchPlaceholder}
               className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-gray-50 dark:bg-[#202024] hover:bg-gray-100/70 dark:hover:bg-[#27272C] focus:bg-white dark:focus:bg-[#202024] border border-gray-300 dark:border-zinc-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-zinc-100 placeholder-gray-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150"
             />
             {filters.searchQuery && (
               <button
                 type="button"
                 onClick={() => onFilterChange({ searchQuery: '' })}
-                aria-label="Очистить поиск"
+                aria-label={t.clearSearch}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-zinc-300 transition cursor-pointer"
               >
                 <X className="w-4 h-4" />
@@ -65,17 +68,17 @@ export const Filters: React.FC<FiltersProps> = ({
               <ArrowUpDown className="w-4 h-4" />
             </div>
             <select
-              aria-label="Сортировка"
+              aria-label={t.sortDefault}
               value={filters.sortBy}
               onChange={(e) => onFilterChange({ sortBy: e.target.value as SortOption })}
               className="w-full pl-10 pr-8 py-2.5 sm:py-3 bg-gray-50 dark:bg-[#202024] hover:bg-gray-100/70 dark:hover:bg-[#27272C] focus:bg-white dark:focus:bg-[#202024] border border-gray-300 dark:border-zinc-700 rounded-lg text-sm sm:text-base text-gray-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-[#E21A1A]/20 focus:border-[#E21A1A] transition duration-150 cursor-pointer appearance-none"
             >
-              <option value="default" className="dark:bg-[#202024]">Сортировка по умолчанию</option>
-              <option value="price_asc" className="dark:bg-[#202024]">Сначала дешевле</option>
-              <option value="price_desc" className="dark:bg-[#202024]">Сначала дороже</option>
-              <option value="departure_nearest" className="dark:bg-[#202024]">По ближайшей дате</option>
-              <option value="duration_asc" className="dark:bg-[#202024]">По длительности (короткие)</option>
-              <option value="duration_desc" className="dark:bg-[#202024]">По длительности (длинные)</option>
+              <option value="default" className="dark:bg-[#202024]">{t.sortDefault}</option>
+              <option value="price_asc" className="dark:bg-[#202024]">{t.sortPriceAsc}</option>
+              <option value="price_desc" className="dark:bg-[#202024]">{t.sortPriceDesc}</option>
+              <option value="departure_nearest" className="dark:bg-[#202024]">{t.sortDepartureNearest}</option>
+              <option value="duration_asc" className="dark:bg-[#202024]">{t.sortDurationAsc}</option>
+              <option value="duration_desc" className="dark:bg-[#202024]">{t.sortDurationDesc}</option>
             </select>
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 dark:text-zinc-500">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,10 +92,10 @@ export const Filters: React.FC<FiltersProps> = ({
         <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-zinc-800">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-zinc-400">
             <MapPin className="w-3.5 h-3.5 text-[#E21A1A]" />
-            <span>Регион:</span>
+            <span>{t.filterRegionLabel}</span>
           </div>
 
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Фильтр по региону">
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t.filterRegionLabel}>
             <button
               type="button"
               onClick={() => onFilterChange({ selectedRegion: '' })}
@@ -102,7 +105,7 @@ export const Filters: React.FC<FiltersProps> = ({
                   : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
               }`}
             >
-              Все регионы
+              {t.filterAllRegions}
             </button>
             {availableRegions.map((region) => (
               <button
@@ -125,10 +128,10 @@ export const Filters: React.FC<FiltersProps> = ({
         <div className="space-y-2 pt-2 border-t border-gray-100 dark:border-zinc-800">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-zinc-400">
             <Calendar className="w-3.5 h-3.5 text-[#E21A1A]" />
-            <span>Месяц отправления:</span>
+            <span>{t.filterMonthLabel}</span>
           </div>
 
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Фильтр по месяцу отправления">
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t.filterMonthLabel}>
             <button
               type="button"
               onClick={() => onFilterChange({ selectedMonth: '' })}
@@ -138,9 +141,9 @@ export const Filters: React.FC<FiltersProps> = ({
                   : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
               }`}
             >
-              Все месяцы
+              {t.filterAllMonths}
             </button>
-            {availableMonths.map(({ key, label }) => (
+            {availableMonths.map(({ key }) => (
               <button
                 key={key}
                 type="button"
@@ -151,7 +154,7 @@ export const Filters: React.FC<FiltersProps> = ({
                     : 'bg-gray-100 dark:bg-[#202024] text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-[#2A2A30]'
                 }`}
               >
-                {label}
+                {formatMonthLabel(key)}
               </button>
             ))}
           </div>
@@ -162,7 +165,7 @@ export const Filters: React.FC<FiltersProps> = ({
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
             <span>
-              Показано маршрутов: <strong className="text-gray-900 dark:text-white font-semibold">{totalResults}</strong>
+              {t.routesFound} <strong className="text-gray-900 dark:text-white font-semibold">{totalResults}</strong>
             </span>
           </div>
 
@@ -173,7 +176,7 @@ export const Filters: React.FC<FiltersProps> = ({
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#E21A1A] hover:text-[#C81010] bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 px-3 py-1.5 rounded-md transition duration-150 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Сбросить все фильтры</span>
+              <span>{t.resetAllFilters}</span>
             </button>
           )}
         </div>

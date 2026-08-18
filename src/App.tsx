@@ -3,6 +3,8 @@ import trainsData from './data/trains.json';
 import type { Train, FilterState } from './types/train';
 import { getAvailableMonths, getAvailableRegions, getNearestDeparture } from './utils/formatters';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { A11yProvider } from './context/A11yContext';
 import { Header } from './components/Header';
 import { Filters } from './components/Filters';
 import { TrainCard } from './components/TrainCard';
@@ -18,9 +20,15 @@ const INITIAL_FILTERS: FilterState = {
 };
 
 const CatalogContent: React.FC = () => {
-  const trains: Train[] = useMemo(() => trainsData.trains, []);
-  const availableRegions = useMemo(() => getAvailableRegions(trains), [trains]);
-  const availableMonths = useMemo(() => getAvailableMonths(trains), [trains]);
+  const { localizeTrain } = useLanguage();
+  const rawTrains: Train[] = useMemo(() => trainsData.trains, []);
+  const localizedTrains: Train[] = useMemo(
+    () => rawTrains.map((t) => localizeTrain(t)),
+    [rawTrains, localizeTrain]
+  );
+
+  const availableRegions = useMemo(() => getAvailableRegions(localizedTrains), [localizedTrains]);
+  const availableMonths = useMemo(() => getAvailableMonths(localizedTrains), [localizedTrains]);
 
   // Read initial filter state from URL if available
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -35,15 +43,16 @@ const CatalogContent: React.FC = () => {
   });
 
   // Selected train for modal
-  const [selectedTrain, setSelectedTrain] = useState<Train | null>(() => {
+  const [selectedTrainId, setSelectedTrainId] = useState<string | null>(() => {
     if (typeof window === 'undefined') return null;
     const params = new URLSearchParams(window.location.search);
-    const trainId = params.get('train');
-    if (trainId) {
-      return trains.find((t) => t.id === trainId) || null;
-    }
-    return null;
+    return params.get('train') || null;
   });
+
+  const selectedTrain = useMemo(() => {
+    if (!selectedTrainId) return null;
+    return localizedTrains.find((t) => t.id === selectedTrainId) || null;
+  }, [selectedTrainId, localizedTrains]);
 
   // Sync state to URL parameters
   useEffect(() => {
@@ -53,12 +62,12 @@ const CatalogContent: React.FC = () => {
     if (filters.selectedRegion) params.set('region', filters.selectedRegion);
     if (filters.selectedMonth) params.set('month', filters.selectedMonth);
     if (filters.sortBy !== 'default') params.set('sort', filters.sortBy);
-    if (selectedTrain) params.set('train', selectedTrain.id);
+    if (selectedTrainId) params.set('train', selectedTrainId);
 
     const queryString = params.toString();
     const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
     window.history.replaceState(null, '', newUrl);
-  }, [filters, selectedTrain]);
+  }, [filters, selectedTrainId]);
 
   const handleFilterChange = useCallback((newPartial: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...newPartial }));
@@ -77,7 +86,7 @@ const CatalogContent: React.FC = () => {
 
   // Filter and sort trains
   const filteredTrains = useMemo(() => {
-    let result = trains.filter((train) => {
+    let result = localizedTrains.filter((train) => {
       // 1. Search Query (matches name, description, tags, or cities in route)
       if (filters.searchQuery.trim()) {
         const q = filters.searchQuery.trim().toLowerCase();
@@ -128,12 +137,12 @@ const CatalogContent: React.FC = () => {
     }
 
     return result;
-  }, [trains, filters]);
+  }, [localizedTrains, filters]);
 
   return (
     <div className="min-h-screen bg-[#F4F5F8] dark:bg-[#121214] flex flex-col font-sans text-gray-900 dark:text-zinc-100 antialiased transition-colors duration-200">
       {/* Header */}
-      <Header totalCount={trains.length} filteredCount={filteredTrains.length} />
+      <Header totalCount={localizedTrains.length} filteredCount={filteredTrains.length} />
 
       {/* Main Catalog View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -158,7 +167,7 @@ const CatalogContent: React.FC = () => {
               <TrainCard
                 key={train.id}
                 train={train}
-                onSelect={(t) => setSelectedTrain(t)}
+                onSelect={(t) => setSelectedTrainId(t.id)}
                 onTagClick={handleTagClick}
               />
             ))}
@@ -172,7 +181,7 @@ const CatalogContent: React.FC = () => {
       <TrainModal
         train={selectedTrain}
         isOpen={Boolean(selectedTrain)}
-        onClose={() => setSelectedTrain(null)}
+        onClose={() => setSelectedTrainId(null)}
         onTagClick={handleTagClick}
       />
 
@@ -185,7 +194,11 @@ const CatalogContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <CatalogContent />
+      <LanguageProvider>
+        <A11yProvider>
+          <CatalogContent />
+        </A11yProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 };

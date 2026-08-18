@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TrainCard } from '../components/TrainCard';
+import { LanguageProvider } from '../context/LanguageContext';
 import type { Train } from '../types/train';
 
 const mockTrain: Train = {
@@ -18,10 +19,14 @@ const mockTrain: Train = {
   buy_url: 'https://www.rzd.ru/ru/9264',
 };
 
+const renderWithProvider = (ui: React.ReactElement) => {
+  return render(<LanguageProvider>{ui}</LanguageProvider>);
+};
+
 describe('TrainCard Component', () => {
   it('renders all required train card information', () => {
     const handleSelect = vi.fn();
-    render(<TrainCard train={mockTrain} onSelect={handleSelect} />);
+    renderWithProvider(<TrainCard train={mockTrain} onSelect={handleSelect} />);
 
     // Name
     expect(screen.getByRole('heading', { name: 'В Карелию' })).toBeInTheDocument();
@@ -30,7 +35,7 @@ describe('TrainCard Component', () => {
     // Duration
     expect(screen.getByText('3 дня')).toBeInTheDocument();
     // Route (first and last city)
-    expect(screen.getByLabelText('Маршрут: Москва → Москва')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Маршрут тура: Москва → Москва/)).toBeInTheDocument();
     // Price "от"
     expect(screen.getByText(/24[\s\u00A0\u202F]?900/)).toBeInTheDocument();
     // Nearest departure date
@@ -43,7 +48,7 @@ describe('TrainCard Component', () => {
   it('triggers onSelect callback when clicking the card or details button', async () => {
     const user = userEvent.setup();
     const handleSelect = vi.fn();
-    render(<TrainCard train={mockTrain} onSelect={handleSelect} />);
+    renderWithProvider(<TrainCard train={mockTrain} onSelect={handleSelect} />);
 
     const button = screen.getByRole('button', { name: /подробнее/i });
     await user.click(button);
@@ -55,7 +60,7 @@ describe('TrainCard Component', () => {
     const handleSelect = vi.fn();
     const handleTagClick = vi.fn();
 
-    render(
+    renderWithProvider(
       <TrainCard
         train={mockTrain}
         onSelect={handleSelect}

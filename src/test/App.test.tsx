@@ -76,8 +76,9 @@ describe('App Integration', () => {
     expect(buyLink).toHaveAttribute('target', '_blank');
 
     // Close modal
-    const closeBtn = screen.getByRole('button', { name: /закрыть окно/i });
-    await user.click(closeBtn);
+    const closeButtons = screen.getAllByRole('button', { name: /закрыть/i });
+    expect(closeButtons.length).toBeGreaterThan(0);
+    await user.click(closeButtons[0]);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TrainModal } from '../components/TrainModal';
+import { LanguageProvider } from '../context/LanguageContext';
 import type { Train } from '../types/train';
 
 const mockTrain: Train = {
@@ -18,10 +19,14 @@ const mockTrain: Train = {
   buy_url: 'https://www.rzd.ru/ru/9264',
 };
 
+const renderWithProvider = (ui: React.ReactElement) => {
+  return render(<LanguageProvider>{ui}</LanguageProvider>);
+};
+
 describe('TrainModal Component', () => {
   it('renders complete modal details correctly', () => {
     const handleClose = vi.fn();
-    render(<TrainModal train={mockTrain} isOpen={true} onClose={handleClose} />);
+    renderWithProvider(<TrainModal train={mockTrain} isOpen={true} onClose={handleClose} />);
 
     // Name & Title
     expect(screen.getByRole('heading', { name: 'Жемчужина Кавказа' })).toBeInTheDocument();
@@ -49,16 +54,17 @@ describe('TrainModal Component', () => {
   it('closes when clicking the close button', async () => {
     const user = userEvent.setup();
     const handleClose = vi.fn();
-    render(<TrainModal train={mockTrain} isOpen={true} onClose={handleClose} />);
+    renderWithProvider(<TrainModal train={mockTrain} isOpen={true} onClose={handleClose} />);
 
-    const closeBtn = screen.getByRole('button', { name: /закрыть окно/i });
-    await user.click(closeBtn);
+    const closeButtons = screen.getAllByRole('button', { name: /закрыть/i });
+    expect(closeButtons.length).toBeGreaterThan(0);
+    await user.click(closeButtons[0]);
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
   it('does not render when isOpen is false', () => {
     const handleClose = vi.fn();
-    render(<TrainModal train={mockTrain} isOpen={false} onClose={handleClose} />);
+    renderWithProvider(<TrainModal train={mockTrain} isOpen={false} onClose={handleClose} />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

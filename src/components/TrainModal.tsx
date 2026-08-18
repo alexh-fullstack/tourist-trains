@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import type { Train } from '../types/train';
-import {
-  formatPrice,
-  formatDate,
-  formatDuration,
-  formatRouteShort,
-} from '../utils/formatters';
+import { formatRouteShort } from '../utils/formatters';
+import { useLanguage } from '../context/LanguageContext';
 import {
   X,
   Calendar,
@@ -32,6 +28,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
   onClose,
   onTagClick,
 }) => {
+  const { t, formatPriceLocal, formatDateLocal, formatDurationLocal } = useLanguage();
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -93,7 +90,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            aria-label="Закрыть окно"
+            aria-label={t.modalCloseBtn}
             className="absolute top-4 right-4 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white transition cursor-pointer z-10"
           >
             <X className="w-5 h-5" />
@@ -108,7 +105,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-semibold bg-black/60 text-gray-200 border border-white/20">
                 <Clock className="w-3.5 h-3.5 text-amber-400" />
-                {formatDuration(train.duration_days)}
+                {formatDurationLocal(train.duration_days)}
               </span>
             </div>
 
@@ -117,7 +114,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
             </h2>
 
             <div className="text-xs sm:text-sm text-gray-200 font-medium">
-              Маршрут: <span className="font-bold text-white">{formatRouteShort(train.route)}</span>
+              {t.routeLabel} <span className="font-bold text-white">{formatRouteShort(train.route)}</span>
             </div>
           </div>
         </div>
@@ -127,7 +124,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           {/* Full Description */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-2">
-              Описание туристического маршрута
+              {t.modalAboutTitle}
             </h4>
             <p className="text-sm sm:text-base text-gray-700 dark:text-zinc-300 leading-relaxed bg-gray-50 dark:bg-[#202024] p-4 rounded-lg border border-gray-200 dark:border-zinc-750">
               {train.description}
@@ -138,7 +135,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <Route className="w-4 h-4 text-[#E21A1A]" />
-              <span>Остановки по маршруту ({train.route.length} станций)</span>
+              <span>{t.modalRouteStopsTitle} ({train.route.length} {t.stationsCount})</span>
             </h4>
             <div className="flex flex-wrap items-center gap-2 bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 p-3 sm:p-4 rounded-lg">
               {train.route.map((city, idx) => (
@@ -161,7 +158,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Экскурсионная программа</span>
+              <span>{t.modalExcursionsTitle}</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {train.excursions.map((excursion, idx) => (
@@ -180,7 +177,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-[#E21A1A]" />
-              <span>Все доступные даты отправления ({train.departures.length})</span>
+              <span>{t.modalDeparturesTitle} ({train.departures.length})</span>
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               {train.departures.map((dateStr, idx) => (
@@ -189,9 +186,9 @@ export const TrainModal: React.FC<TrainModalProps> = ({
                   className="p-3 rounded-lg bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 text-center flex flex-col items-center justify-center gap-1 hover:border-[#E21A1A] transition"
                 >
                   <Calendar className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
-                  <span className="text-xs font-bold text-gray-900 dark:text-white">{formatDate(dateStr)}</span>
+                  <span className="text-xs font-bold text-gray-900 dark:text-white">{formatDateLocal(dateStr)}</span>
                   <span className="text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 font-bold px-2 py-0.5 rounded">
-                    Места доступны
+                    {t.seatsAvailable}
                   </span>
                 </div>
               ))}
@@ -202,7 +199,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           {train.tags && train.tags.length > 0 && (
             <div>
               <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-2">
-                Теги
+                {t.modalTagsTitle}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {train.tags.map((tag) => (
@@ -227,10 +224,10 @@ export const TrainModal: React.FC<TrainModalProps> = ({
         {/* Footer with Price & External Buy Link */}
         <div className="p-4 sm:p-6 bg-gray-50 dark:bg-[#121214] border-t border-gray-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
-            <div className="text-xs text-gray-500 dark:text-zinc-400 font-medium">Стоимость билета за тур</div>
+            <div className="text-xs text-gray-500 dark:text-zinc-400 font-medium">{t.modalPriceLabel}</div>
             <div className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white flex items-baseline justify-center sm:justify-start gap-1.5">
-              <span className="text-sm font-normal text-gray-500 dark:text-zinc-400">от</span>
-              <span className="text-[#E21A1A] font-black">{formatPrice(train.price_from)}</span>
+              <span className="text-sm font-normal text-gray-500 dark:text-zinc-400">{t.priceFrom}</span>
+              <span className="text-[#E21A1A] font-black">{formatPriceLocal(train.price_from)}</span>
             </div>
           </div>
 
@@ -240,7 +237,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               onClick={onClose}
               className="hidden sm:inline-flex px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-zinc-300 text-sm font-semibold transition cursor-pointer"
             >
-              Закрыть
+              {t.modalCloseBtn}
             </button>
             <a
               href={train.buy_url}
@@ -249,7 +246,7 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#E21A1A] hover:bg-[#C81010] text-white font-bold text-sm sm:text-base shadow-sm transition-all duration-150 transform active:scale-98"
             >
               <Ticket className="w-5 h-5" />
-              <span>Купить билет</span>
+              <span>{t.buyTicketBtn}</span>
               <ExternalLink className="w-4 h-4 opacity-80" />
             </a>
           </div>

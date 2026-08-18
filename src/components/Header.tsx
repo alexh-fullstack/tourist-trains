@@ -40,10 +40,10 @@ export const Header: React.FC<HeaderProps> = () => {
             <div className="hidden lg:flex items-center gap-1.5 text-xs text-gray-600 dark:text-zinc-400 font-medium">
               <Phone className="w-3.5 h-3.5 text-[#E21A1A]" />
               <span>{t.supportPhoneLabel} </span>
-              <strong className="text-gray-900 dark:text-white font-semibold">8 (800) 200-50-50</strong>
+              <strong className="text-gray-900 dark:text-white font-semibold">123-345-67-89</strong>
             </div>
 
-            {/* Delimiter & Right controls toolbar */}
+            {/* Delimiter & Right controls toolbar without dull grey background */}
             <div className="flex items-center gap-2 pl-3 border-l border-gray-200 dark:border-zinc-700">
               {/* 1. Visually Impaired / Accessibility Mode Button */}
               <button
@@ -51,13 +51,13 @@ export const Header: React.FC<HeaderProps> = () => {
                 onClick={toggleA11y}
                 aria-pressed={isA11y}
                 title={isA11y ? t.a11yActive : t.a11yLabel}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition cursor-pointer border ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition cursor-pointer border ${
                   isA11y
-                    ? 'bg-amber-500 text-black border-amber-600 shadow-xs'
-                    : 'bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-zinc-700 border-gray-200 dark:border-zinc-700'
+                    ? 'bg-[#E21A1A] text-white border-[#E21A1A] shadow-xs'
+                    : 'bg-white dark:bg-transparent text-gray-700 dark:text-zinc-300 hover:border-[#E21A1A] hover:text-[#E21A1A] dark:hover:border-[#E21A1A] dark:hover:text-white border-gray-300 dark:border-zinc-700 shadow-2xs'
                 }`}
               >
-                <Eye className="w-3.5 h-3.5" />
+                <Eye className={`w-3.5 h-3.5 ${isA11y ? 'text-white' : 'text-[#E21A1A]'}`} />
                 <span className="hidden sm:inline">{isA11y ? t.a11yActive : t.a11yLabel}</span>
               </button>
 
@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = () => {
                 onClick={toggleLanguage}
                 aria-label={`Переключить язык на ${language === 'ru' ? 'English' : 'Русский'}`}
                 title={`Switch language to ${language === 'ru' ? 'English' : 'Русский'}`}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-gray-100 dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 hover:bg-gray-200 dark:hover:bg-zinc-700 font-bold text-xs transition cursor-pointer border border-gray-200 dark:border-zinc-700"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-transparent text-gray-800 dark:text-zinc-200 hover:border-[#E21A1A] hover:text-[#E21A1A] dark:hover:border-[#E21A1A] dark:hover:text-white font-bold text-xs transition cursor-pointer border border-gray-300 dark:border-zinc-700 shadow-2xs"
               >
                 <Globe className="w-3.5 h-3.5 text-[#E21A1A]" />
                 <span>{language === 'ru' ? 'RUS' : 'ENG'}</span>
@@ -79,12 +79,12 @@ export const Header: React.FC<HeaderProps> = () => {
                 onClick={toggleTheme}
                 aria-label={theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему'}
                 title={theme === 'dark' ? 'Переключить на светлую тему' : 'Переключить на тёмную тему'}
-                className="flex items-center justify-center p-1.5 rounded-md bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-zinc-700 transition cursor-pointer border border-gray-200 dark:border-zinc-700"
+                className="flex items-center justify-center p-1.5 rounded-md bg-white dark:bg-transparent text-gray-700 dark:text-amber-400 hover:border-[#E21A1A] hover:text-[#E21A1A] dark:hover:border-[#E21A1A] dark:hover:text-amber-300 transition cursor-pointer border border-gray-300 dark:border-zinc-700 shadow-2xs"
               >
                 {theme === 'dark' ? (
                   <Sun className="w-4 h-4 text-amber-400" />
                 ) : (
-                  <Moon className="w-4 h-4 text-gray-600 hover:text-gray-900" />
+                  <Moon className="w-4 h-4 text-gray-700 hover:text-[#E21A1A]" />
                 )}
               </button>
             </div>

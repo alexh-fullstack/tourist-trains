@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
             <div className="space-y-2 text-xs text-zinc-400">
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#E21A1A]" />
-                <span className="font-semibold text-zinc-200">8 (800) 200-50-50</span>
+                <span className="font-semibold text-zinc-200">123-345-67-89</span>
               </div>
               <div className="text-[11px] text-zinc-500">{t.footerCallFree}</div>
               <div className="flex items-center gap-2 pt-1">

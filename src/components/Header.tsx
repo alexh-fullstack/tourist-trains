@@ -74,25 +74,6 @@ export const Header: React.FC<HeaderProps> = () => {
           </div>
         </div>
       </div>
-
-      {/* Clean & Compact Title Section */}
-      <div className="bg-white border-b border-gray-200/80 py-6 sm:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div className="space-y-1.5">
-              <div className="inline-block bg-red-50 text-[#E21A1A] border border-red-200 text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-xs">
-                Железнодорожные круизы по России
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-                Туристические железнодорожные маршруты
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-500 max-w-2xl">
-                Выберите путешествие на комфортабельном поезде-отеле с насыщенной экскурсионной программой
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </header>
   );
 };

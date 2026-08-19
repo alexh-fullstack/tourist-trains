@@ -81,9 +81,9 @@ export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClic
             </div>
           </div>
 
-          {/* Nearest Departure Date */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-zinc-300 bg-red-50/70 dark:bg-red-950/30 border border-red-100 dark:border-red-900/40 px-3 py-2 rounded-lg">
-            <Calendar className="w-4 h-4 text-[#E21A1A] flex-shrink-0" />
+          {/* Nearest Departure Date (calm neutral styling) */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-800 px-3 py-2 rounded-lg">
+            <Calendar className="w-4 h-4 text-gray-500 dark:text-zinc-400 flex-shrink-0" />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs">
               <span className="text-gray-500 dark:text-zinc-400">{t.nearestDepartureLabel}</span>
               <strong className="font-bold text-gray-900 dark:text-white">

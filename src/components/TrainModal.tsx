@@ -187,8 +187,9 @@ export const TrainModal: React.FC<TrainModalProps> = ({
                 >
                   <Calendar className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
                   <span className="text-xs font-bold text-gray-900 dark:text-white">{formatDateLocal(dateStr)}</span>
-                  <span className="text-[10px] text-gray-700 dark:text-zinc-300 bg-gray-100 dark:bg-zinc-800 font-semibold px-2 py-0.5 rounded border border-gray-200 dark:border-zinc-700">
-                    {t.seatsAvailable}
+                  <span className="inline-flex items-center gap-1 text-[10px] text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 font-semibold px-2 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                    <span>{t.seatsAvailable}</span>
                   </span>
                 </div>
               ))}

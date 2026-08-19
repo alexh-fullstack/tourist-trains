@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: './',
+  base: '/tourist-trains/',
   test: {
     globals: true,
     environment: 'jsdom',
@@ -17,4 +17,3 @@ export default defineConfig({
     css: false,
   },
 })
-

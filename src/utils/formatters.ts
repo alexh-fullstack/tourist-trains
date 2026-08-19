@@ -59,6 +59,30 @@ export function formatRouteShort(route: string[]): string {
   return `${route[0]} → ${route[route.length - 1]}`;
 }
 
+export interface RouteDisplayInfo {
+  isCircular: boolean;
+  startCity: string;
+  endCity: string;
+  intermediateStops: string[];
+}
+
+export function getRouteDisplayInfo(route: string[]): RouteDisplayInfo {
+  if (!route || route.length === 0) {
+    return { isCircular: false, startCity: '', endCity: '', intermediateStops: [] };
+  }
+  const isCircular = route.length > 1 && route[0] === route[route.length - 1];
+  const startCity = route[0];
+  const endCity = route[route.length - 1];
+  const intermediateStops = route.slice(1, isCircular ? -1 : undefined);
+
+  return {
+    isCircular,
+    startCity,
+    endCity,
+    intermediateStops,
+  };
+}
+
 /**
  * Gets nearest departure date for a train.
  * If referenceDate is provided, returns earliest date >= referenceDate.

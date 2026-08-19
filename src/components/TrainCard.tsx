@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Train } from '../types/train';
-import { formatRouteShort, getNearestDeparture } from '../utils/formatters';
+import { getNearestDeparture, getRouteDisplayInfo } from '../utils/formatters';
 import { useLanguage } from '../context/LanguageContext';
-import { Calendar, Clock, MapPin, ArrowRight, Tag, ChevronRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowRight, Tag, ChevronRight, RotateCw } from 'lucide-react';
 
 interface TrainCardProps {
   train: Train;
@@ -13,7 +13,7 @@ interface TrainCardProps {
 export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClick }) => {
   const { t, formatPriceLocal, formatDateLocal, formatDurationLocal } = useLanguage();
   const nearestDate = getNearestDeparture(train.departures);
-  const routeShort = formatRouteShort(train.route);
+  const routeInfo = getRouteDisplayInfo(train.route);
   const imageSrc = train.image || `images/${train.id}.jpg`;
 
   return (
@@ -30,7 +30,7 @@ export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClic
       className="group relative bg-white dark:bg-[#18181B] rounded-xl border border-gray-200 dark:border-zinc-800 shadow-xs hover:shadow-lg hover:border-gray-300 dark:hover:border-zinc-700 transition-all duration-200 flex flex-col justify-between overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E21A1A]"
       aria-label={`${train.name}, ${train.region}`}
     >
-      {/* Top Image with Badge Overlay */}
+      {/* Top Image with Badges (Region + Duration) */}
       <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-gray-100 dark:bg-zinc-800">
         <img
           src={imageSrc}
@@ -62,44 +62,49 @@ export const TrainCard: React.FC<TrainCardProps> = ({ train, onSelect, onTagClic
       </div>
 
       <div className="p-5 flex-1 flex flex-col justify-between">
-        <div className="space-y-3">
-          {/* Route (first -> last city) */}
+        <div className="space-y-2.5">
+          {/* Block 1: Route (Soft muted border) */}
           <div
-            aria-label={`${t.routeLabel} ${routeShort}`}
-            className="bg-gray-50 dark:bg-[#202024] border border-gray-100 dark:border-zinc-800 rounded-lg p-3"
+            aria-label={`${t.routeLabel} ${train.route.join(' → ')}`}
+            className="bg-gray-50/80 dark:bg-[#202024]/80 border border-gray-200/60 dark:border-zinc-800/60 rounded-lg p-3"
           >
             <div className="text-xs font-semibold text-gray-500 dark:text-zinc-400 mb-1 flex items-center justify-between">
-              <span>{t.routeLabel}</span>
-              <span className="text-gray-400 dark:text-zinc-500 font-normal">
+              <span className="flex items-center gap-1.5">
+                {routeInfo.isCircular && <RotateCw className="w-3.5 h-3.5 text-[#E21A1A] flex-shrink-0" />}
+                <span>{t.routeLabel}</span>
+              </span>
+              <span className="text-gray-400 dark:text-zinc-500 font-normal text-[11px]">
                 {train.route.length} {t.stationsCount}
               </span>
             </div>
-            <div className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 flex-wrap">
-              <span>{train.route[0]}</span>
+
+            {/* Cities with arrow between them */}
+            <div className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 truncate">
+              <span className="truncate">{routeInfo.startCity}</span>
               <ArrowRight className="w-4 h-4 text-[#E21A1A] flex-shrink-0" />
-              <span>{train.route[train.route.length - 1]}</span>
+              <span className="truncate">{routeInfo.endCity}</span>
             </div>
           </div>
 
-          {/* Nearest Departure Date (calm neutral styling) */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-zinc-300 bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-800 px-3 py-2 rounded-lg">
+          {/* Block 2: Nearest Departure Date (Soft muted border matching Block 1) */}
+          <div className="bg-gray-50/80 dark:bg-[#202024]/80 border border-gray-200/60 dark:border-zinc-800/60 rounded-lg p-3 flex items-center gap-2.5 text-xs sm:text-sm text-gray-700 dark:text-zinc-300">
             <Calendar className="w-4 h-4 text-gray-500 dark:text-zinc-400 flex-shrink-0" />
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-1 text-xs">
+            <div className="flex items-center gap-1.5 truncate text-xs">
               <span className="text-gray-500 dark:text-zinc-400">{t.nearestDepartureLabel}</span>
-              <strong className="font-bold text-gray-900 dark:text-white">
+              <strong className="font-bold text-gray-900 dark:text-white truncate">
                 {nearestDate ? formatDateLocal(nearestDate, true) : t.onRequest}
               </strong>
             </div>
           </div>
 
           {/* Description preview */}
-          <p className="text-xs sm:text-sm text-gray-600 dark:text-zinc-300 line-clamp-2 leading-relaxed">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-zinc-300 line-clamp-2 leading-relaxed pt-0.5">
             {train.description}
           </p>
 
           {/* Tags */}
           {train.tags && train.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 pt-1">
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
               {train.tags.map((tag) => (
                 <button
                   key={tag}

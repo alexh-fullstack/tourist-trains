@@ -24,7 +24,7 @@ const renderWithProvider = (ui: React.ReactElement) => {
 };
 
 describe('TrainModal Component', () => {
-  it('renders complete modal details correctly', () => {
+  it('renders complete modal details correctly', async () => {
     const handleClose = vi.fn();
     renderWithProvider(<TrainModal train={mockTrain} isOpen={true} onClose={handleClose} />);
 
@@ -38,8 +38,12 @@ describe('TrainModal Component', () => {
       expect(screen.getByText(exc)).toBeInTheDocument();
     });
 
-    // All departure dates
+    // Calendar view active initially
     expect(screen.getByText(/12 сентября 2026/i)).toBeInTheDocument();
+
+    // Switch to List view
+    const listBtn = screen.getByRole('button', { name: /список/i });
+    await userEvent.click(listBtn);
     expect(screen.getByText(/3 октября 2026/i)).toBeInTheDocument();
     expect(screen.getByText(/24 октября 2026/i)).toBeInTheDocument();
 

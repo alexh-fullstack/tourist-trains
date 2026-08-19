@@ -93,6 +93,27 @@ describe('Filters Component', () => {
     expect(handleFilterChange).toHaveBeenCalledWith({ selectedRegion: 'Сибирь' });
   });
 
+  it('triggers onFilterChange when selecting sort option', async () => {
+    const user = userEvent.setup();
+    const handleFilterChange = vi.fn();
+    const handleReset = vi.fn();
+
+    renderWithProvider(
+      <Filters
+        filters={defaultFilters}
+        onFilterChange={handleFilterChange}
+        onReset={handleReset}
+        availableRegions={mockRegions}
+        availableMonths={mockMonths}
+        totalResults={5}
+      />
+    );
+
+    const sortSelect = screen.getByRole('combobox');
+    await user.selectOptions(sortSelect, 'price_asc');
+    expect(handleFilterChange).toHaveBeenCalledWith({ sortBy: 'price_asc' });
+  });
+
   it('shows reset button when filters are active and triggers onReset', async () => {
     const user = userEvent.setup();
     const handleFilterChange = vi.fn();

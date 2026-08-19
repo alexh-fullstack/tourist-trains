@@ -160,8 +160,8 @@ export const Filters: React.FC<FiltersProps> = ({
           </div>
         </div>
 
-        {/* Bottom stats and Reset */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-gray-600 dark:text-zinc-400">
+        {/* Bottom stats and Reset (Fixed height, zero layout shift) */}
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-zinc-800 text-xs sm:text-sm text-gray-600 dark:text-zinc-400 h-8">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
             <span>
@@ -169,16 +169,20 @@ export const Filters: React.FC<FiltersProps> = ({
             </span>
           </div>
 
-          {hasActiveFilters && (
-            <button
-              type="button"
-              onClick={onReset}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#E21A1A] hover:text-[#C81010] bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 px-3 py-1.5 rounded-md transition duration-150 cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>{t.resetAllFilters}</span>
-            </button>
-          )}
+          <div className="flex items-center">
+            {hasActiveFilters ? (
+              <button
+                type="button"
+                onClick={onReset}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#E21A1A] hover:text-[#C81010] bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 px-2.5 py-1 rounded-md transition duration-150 cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>{t.resetAllFilters}</span>
+              </button>
+            ) : (
+              <div className="h-6" aria-hidden="true" />
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -61,6 +61,15 @@ export interface Translations {
   footerCallFree: string;
   footerCopyright: string;
   footerDemoNote: string;
+  // New Best Practice Keys
+  circularTourBadge: string;
+  linearTourBadge: string;
+  circularViaLabel: string;
+  viewCalendarTab: string;
+  viewListTab: string;
+  excursionsIncludedBadge: string;
+  weekDays: string[];
+  selectDatePrompt: string;
 }
 
 const translations: Record<Language, Translations> = {
@@ -100,7 +109,7 @@ const translations: Record<Language, Translations> = {
     modalAboutTitle: 'Описание туристического маршрута',
     modalRouteStopsTitle: 'Остановки по маршруту',
     modalExcursionsTitle: 'Экскурсионная программа',
-    modalDeparturesTitle: 'Все доступные даты отправления',
+    modalDeparturesTitle: 'Доступные даты выезда',
     modalTagsTitle: 'Теги',
     modalPriceLabel: 'Стоимость билета за тур',
     modalCloseBtn: 'Закрыть',
@@ -122,6 +131,15 @@ const translations: Record<Language, Translations> = {
     footerCallFree: 'Круглосуточно, звонок бесплатный',
     footerCopyright: '© 2026 Витрина туристских поездов. Тестовое задание.',
     footerDemoNote: 'Все данные и маршруты предоставлены для демонстрации прототипа.',
+    // New Keys
+    circularTourBadge: 'Кольцевой круиз',
+    linearTourBadge: 'Прямой маршрут',
+    circularViaLabel: 'через',
+    viewCalendarTab: 'Календарь',
+    viewListTab: 'Список',
+    excursionsIncludedBadge: 'Включено в программу тура',
+    weekDays: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+    selectDatePrompt: 'Выберите удобную дату отправления:',
   },
   en: {
     brandName: 'Tourist Trains Showcase',
@@ -159,7 +177,7 @@ const translations: Record<Language, Translations> = {
     modalAboutTitle: 'Tour Itinerary & Details',
     modalRouteStopsTitle: 'Route Stops & Destinations',
     modalExcursionsTitle: 'Included Excursion Program',
-    modalDeparturesTitle: 'All Available Departure Dates',
+    modalDeparturesTitle: 'Available Departure Dates',
     modalTagsTitle: 'Tour Tags',
     modalPriceLabel: 'Ticket Price per Tour',
     modalCloseBtn: 'Close',
@@ -181,6 +199,15 @@ const translations: Record<Language, Translations> = {
     footerCallFree: 'Toll-free round-the-clock hotline',
     footerCopyright: '© 2026 Tourist Trains Showcase. Test Assignment.',
     footerDemoNote: 'All route data and prices are presented for prototype demonstration.',
+    // New Keys
+    circularTourBadge: 'Round-trip Cruise',
+    linearTourBadge: 'One-way Journey',
+    circularViaLabel: 'via',
+    viewCalendarTab: 'Calendar',
+    viewListTab: 'List',
+    excursionsIncludedBadge: 'Included in Tour Package',
+    weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+    selectDatePrompt: 'Choose your preferred departure date:',
   },
 };
 

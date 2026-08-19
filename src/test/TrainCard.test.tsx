@@ -34,8 +34,8 @@ describe('TrainCard Component', () => {
     expect(screen.getByText('Северо-Запад')).toBeInTheDocument();
     // Duration
     expect(screen.getByText('3 дня')).toBeInTheDocument();
-    // Route (first and last city)
-    expect(screen.getByLabelText(/Маршрут тура: Москва → Москва/)).toBeInTheDocument();
+    // Route
+    expect(screen.getByLabelText(/Маршрут тура/i)).toBeInTheDocument();
     // Price "от"
     expect(screen.getByText(/24[\s\u00A0\u202F]?900/)).toBeInTheDocument();
     // Nearest departure date

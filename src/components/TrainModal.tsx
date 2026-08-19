@@ -122,15 +122,18 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-          {/* Close button */}
+          {/* Close button (generous touch area, high z-index, crisp feedback) */}
           <button
             ref={closeButtonRef}
             type="button"
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             aria-label={t.modalCloseBtn}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/50 hover:bg-black/80 text-white transition cursor-pointer z-10"
+            className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/90 active:scale-95 text-white flex items-center justify-center border border-white/30 backdrop-blur-md shadow-lg transition-all duration-150 cursor-pointer z-30 group"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
           </button>
 
           {/* Top badges & Title (clean: region + duration) */}

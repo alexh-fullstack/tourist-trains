@@ -157,17 +157,17 @@ export const TrainModal: React.FC<TrainModalProps> = ({
           {/* Excursions Included */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400 mb-3 flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-[#E21A1A]" />
               <span>{t.modalExcursionsTitle}</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {train.excursions.map((excursion, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-2.5 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm"
+                  className="flex items-start gap-2.5 p-3 rounded-lg bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 text-gray-800 dark:text-zinc-200 text-xs sm:text-sm shadow-2xs"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span className="font-semibold">{excursion}</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#E21A1A] flex-shrink-0 mt-0.5" />
+                  <span className="font-semibold text-gray-900 dark:text-white">{excursion}</span>
                 </div>
               ))}
             </div>
@@ -183,11 +183,11 @@ export const TrainModal: React.FC<TrainModalProps> = ({
               {train.departures.map((dateStr, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-lg bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 text-center flex flex-col items-center justify-center gap-1 hover:border-[#E21A1A] transition"
+                  className="p-3 rounded-lg bg-gray-50 dark:bg-[#202024] border border-gray-200 dark:border-zinc-750 text-center flex flex-col items-center justify-center gap-1.5 hover:border-[#E21A1A] transition shadow-2xs"
                 >
                   <Calendar className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
                   <span className="text-xs font-bold text-gray-900 dark:text-white">{formatDateLocal(dateStr)}</span>
-                  <span className="text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 font-bold px-2 py-0.5 rounded">
+                  <span className="text-[10px] text-gray-700 dark:text-zinc-300 bg-gray-100 dark:bg-zinc-800 font-semibold px-2 py-0.5 rounded border border-gray-200 dark:border-zinc-700">
                     {t.seatsAvailable}
                   </span>
                 </div>
